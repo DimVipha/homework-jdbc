@@ -38,4 +38,11 @@ public class UserController {
             System.out.println("User not found");
         }
     }
+    public void searchUsers(){
+        View.searchUser(users);
+    }
+    public void sortUsersByName() {
+        List<User> sortedUsers = userRepo.getAllUsersSortedByName();
+        View.showSortedUsers(sortedUsers);
+    }
 }

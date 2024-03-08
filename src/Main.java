@@ -33,9 +33,16 @@ public class Main {
                    scanner.nextLine();
                }
                case 5->{
-
+                   userController.searchUsers();
+                   System.out.print("Press enter to continue...");
+                   scanner.nextLine();
                }
                case 6->{
+                   userController.sortUsersByName();
+                   System.out.print("Press enter to continue...");
+                   scanner.nextLine();
+               }
+               case 7->{
                    System.exit(0);
                }
                default -> {

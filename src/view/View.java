@@ -16,7 +16,7 @@ public class View {
 
 public static void showUser(List<User> userList){
     Table tableUser = new Table(7, BorderStyle.UNICODE_DOUBLE_BOX_WIDE, ShownBorders.ALL);
-//    Table tableUser = new Table(7, BorderStyle.UNICODE_BOX_DOUBLE_BORDER, ShownBorders.ALL);
+
 
     tableUser.addCell("     ID     ");
     tableUser.addCell("     Name     ");
@@ -49,12 +49,14 @@ public static void showUser(List<User> userList){
         table.setColumnWidth(3,25,35);
         table.setColumnWidth(4,25,35);
         table.setColumnWidth(5,25,35);
+        table.setColumnWidth(6,25,35);
         table.addCell("1)Read All User");
         table.addCell("|  2)Create User");
         table.addCell("|  3)Update User");
         table.addCell("|  4)Delete User");
         table.addCell("|  5)Search User");
-        table.addCell("|  6)Exit");
+        table.addCell("|  6)Sort by name");
+        table.addCell("|  7)Exit");
         System.out.println(table.render());
     }
     private static String hidePassword(String password) {
@@ -65,7 +67,7 @@ public static void showUser(List<User> userList){
         System.out.print(">> Choose one option: ");
         try {
             choice = Integer.parseInt(scanner.nextLine());
-            if (choice >= 1 && choice <= 6) {
+            if (choice >= 1 && choice <= 7) {
                 return choice;
             } else {
                 System.out.println("Please choose an option between [1-6]");
@@ -154,6 +156,63 @@ public static Integer userDelete(List<User> userList){
 
         return -1; // Return -1 to indicate user not found
     }
+    public static void searchUser(List<User> userList){
+        System.out.print("Enter user id to search :");
+        int userId = Integer.parseInt(scanner.nextLine());
+        Table tableUser = new Table(7, BorderStyle.UNICODE_DOUBLE_BOX_WIDE, ShownBorders.ALL);
+        tableUser.addCell("     ID     ");
+        tableUser.addCell("     Name     ");
+        tableUser.addCell("     Email     ");
+        tableUser.addCell("     Password     ");
+        tableUser.addCell("     Is Deleted     ");
+        tableUser.addCell("     Is Verified     ");
+        tableUser.addCell("     UUID     ");
+        Boolean isSearchFound = false;
+        for(User user : userList){
+            if(user.getId().equals(userId)){
+                tableUser.addCell(user.getId().toString(), cellStyle);
+                tableUser.addCell(user.getName(), cellStyle);
+                tableUser.addCell(user.getEmail(), cellStyle);
+                tableUser.addCell(hidePassword(user.getPassword()), cellStyle);
+                tableUser.addCell(user.getIsDeleted().toString(), cellStyle);
+                tableUser.addCell(user.getIsVerified().toString(), cellStyle);
+                tableUser.addCell(user.getUuid(), cellStyle);
+                isSearchFound = true;
+                break;
+            }
+        }
+        if (isSearchFound){
+            System.out.println(tableUser.render());
+        }else {
+            System.out.println("Search not found ");
+        }
+    }
+    public static void showSortedUsers(List<User> userList) {
+    showUser(userList);
+//        Table tableUser = new Table(7, BorderStyle.UNICODE_DOUBLE_BOX_WIDE, ShownBorders.ALL);
+//
+//        tableUser.addCell("     ID     ");
+//        tableUser.addCell("     Name     ");
+//        tableUser.addCell("     Email     ");
+//        tableUser.addCell("     Password     ");
+//        tableUser.addCell("     Is Deleted     ");
+//        tableUser.addCell("     Is Verified     ");
+//        tableUser.addCell("     UUID     ");
+//
+//        CellStyle cellStyle = new CellStyle(CellStyle.HorizontalAlign.center);
+//
+//        for (User user : userList) {
+//            tableUser.addCell(user.getId().toString(), cellStyle);
+//            tableUser.addCell(user.getName(), cellStyle);
+//            tableUser.addCell(user.getEmail(), cellStyle);
+//            tableUser.addCell(hidePassword(user.getPassword()), cellStyle);
+//            tableUser.addCell(user.getIsDeleted().toString(), cellStyle);
+//            tableUser.addCell(user.getIsVerified().toString(), cellStyle);
+//            tableUser.addCell(user.getUuid(), cellStyle);
+//        }
+//        System.out.println(tableUser.render());
+    }
+
 
 
 
