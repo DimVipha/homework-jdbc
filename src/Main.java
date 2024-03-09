@@ -8,7 +8,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         View.viewApplication();
-//        userController.getUsers();
         do {
             View.renderMenu();
            switch (View.options()){
@@ -48,7 +47,6 @@ public class Main {
                }
            }
         }while (true);
-
 
     }
 }

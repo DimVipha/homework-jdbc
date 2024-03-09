@@ -18,8 +18,8 @@ public class UserController {
         View.showUser(userRepo.getAllUsers());
     }
     public void addUser(){
-        User userCreated = View.createUser();
-        userRepo.createUser(userCreated);
+        User createdUser = View.createUser();
+        userRepo.createUser(createdUser);
     }
     public void deleteUsers() {
         User user = View.userDelete(users);
@@ -54,27 +54,24 @@ public class UserController {
     public void handleSortByName() {
         do {
             View.sortMenu();
-//            System.out.println("Sort by name:");
-//            System.out.println("1. Ascending");
-//            System.out.println("2. Descending");
-//            System.out.println("3. Back to main menu");
-//            System.out.print("Enter your choice: ");
-//            int choice = Integer.parseInt(scanner.nextLine());
             switch (View.shortOptions()) {
-                case 1 -> {
-                    getAllUsersSortedByName(true); // Sort by name in ascending order
+                case 1: {
+                    getAllUsersSortedByName(true);
                     System.out.print("Press enter to continue...");
                     scanner.nextLine();
+                    break;
                 }
-                case 2 -> {
-                    getAllUsersSortedByName(false); // Sort by name in descending order
+                case 2: {
+                    getAllUsersSortedByName(false);
                     System.out.print("Press enter to continue...");
                     scanner.nextLine();
+                    break;
                 }
-                case 3 -> {
-                    return;
+                case 3:{
+                    System.exit(0);
+                   break;
                 }
-                default -> {
+                default :{
                     System.out.println("Invalid option. Please try again.");
                 }
             }

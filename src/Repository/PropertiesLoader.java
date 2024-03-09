@@ -9,12 +9,11 @@ public class PropertiesLoader {
     public static void LoadPropertiesFile(){
         try(BufferedReader bufferedReader =
                     new BufferedReader(
-                            new FileReader("application.properties")
+                            new FileReader("./src/resource/database.properties")
                     );
         )
         {
             properties.load(bufferedReader);
-
         }catch (Exception exception){
             System.out.println(exception.getMessage());
         }
