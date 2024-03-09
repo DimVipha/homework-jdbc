@@ -159,8 +159,9 @@ public class UserRepoImpl implements UserRepo{
     }
 
     @Override
-    public List<User> getAllUsersSortedByName() {
-        String sql = "SELECT * FROM users ORDER BY user_name";
+    public List<User> getAllUsersSortedByName(boolean ascending) {
+        String order = ascending ? "ASC" : "DESC";
+        String sql = "SELECT * FROM users ORDER BY user_name " + order;
         List<User> userList = new ArrayList<>();
 
         PropertiesLoader.LoadPropertiesFile();
@@ -169,8 +170,8 @@ public class UserRepoImpl implements UserRepo{
                 PropertiesLoader.properties.getProperty("database_url"),
                 PropertiesLoader.properties.getProperty("database_username"),
                 PropertiesLoader.properties.getProperty("database_password"));
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 userList.add(new User(
@@ -188,6 +189,37 @@ public class UserRepoImpl implements UserRepo{
         }
         return userList;
     }
+
+//    public List<User> getAllUsersSortedByName() {
+//        String sql = "SELECT * FROM users ORDER BY user_name";
+//        List<User> userList = new ArrayList<>();
+//
+//        PropertiesLoader.LoadPropertiesFile();
+//
+//        try (Connection connection = DriverManager.getConnection(
+//                PropertiesLoader.properties.getProperty("database_url"),
+//                PropertiesLoader.properties.getProperty("database_username"),
+//                PropertiesLoader.properties.getProperty("database_password"));
+//             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//             ResultSet resultSet = preparedStatement.executeQuery()) {
+//
+//            while (resultSet.next()) {
+//                userList.add(new User(
+//                        resultSet.getInt("user_id"),
+//                        resultSet.getString("user_uuid"),
+//                        resultSet.getString("user_name"),
+//                        resultSet.getString("user_email"),
+//                        resultSet.getString("user_password"),
+//                        resultSet.getBoolean("is_deleted"),
+//                        resultSet.getBoolean("is_verified")
+//                ));
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return userList;
+//    }
+
 
 
 }

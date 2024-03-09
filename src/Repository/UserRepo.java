@@ -11,6 +11,6 @@ public interface UserRepo {
     void deleteUser(Integer id);
     User updateUser(User user);
     Optional<User> searchUser(Integer id);
-    List<User> getAllUsersSortedByName();
+    List<User> getAllUsersSortedByName(boolean ascending);
 
 }

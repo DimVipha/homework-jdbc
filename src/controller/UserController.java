@@ -8,8 +8,10 @@ import view.View;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class UserController {
+    private static final Scanner scanner = new Scanner(System.in);
     private static final UserRepo userRepo = new UserRepoImpl();
     static List<User> users = userRepo.getAllUsers();
     public void getUsers(){
@@ -19,10 +21,13 @@ public class UserController {
         User userCreated = View.createUser();
         userRepo.createUser(userCreated);
     }
-    public void deleteUsers(){
-        int userId = View.userDelete(users);
-        userRepo.deleteUser(userId);
+    public void deleteUsers() {
+        User user = View.userDelete(users);
+        if (user != null) {
+            userRepo.deleteUser(user.getId());
+        }
     }
+
     public void updateUser(){
         int userId = View.updateUser(users);
         if(userId!=-1){
@@ -41,8 +46,39 @@ public class UserController {
     public void searchUsers(){
         View.searchUser(users);
     }
-    public void sortUsersByName() {
-        List<User> sortedUsers = userRepo.getAllUsersSortedByName();
-        View.showSortedUsers(sortedUsers);
+
+    public void getAllUsersSortedByName(boolean ascending) {
+        List<User> userList = userRepo.getAllUsersSortedByName(ascending);
+        View.showSortedUsers(userList);
+    }
+    public void handleSortByName() {
+        do {
+            View.sortMenu();
+//            System.out.println("Sort by name:");
+//            System.out.println("1. Ascending");
+//            System.out.println("2. Descending");
+//            System.out.println("3. Back to main menu");
+//            System.out.print("Enter your choice: ");
+//            int choice = Integer.parseInt(scanner.nextLine());
+            switch (View.shortOptions()) {
+                case 1 -> {
+                    getAllUsersSortedByName(true); // Sort by name in ascending order
+                    System.out.print("Press enter to continue...");
+                    scanner.nextLine();
+                }
+                case 2 -> {
+                    getAllUsersSortedByName(false); // Sort by name in descending order
+                    System.out.print("Press enter to continue...");
+                    scanner.nextLine();
+                }
+                case 3 -> {
+                    return;
+                }
+                default -> {
+                    System.out.println("Invalid option. Please try again.");
+                }
+            }
+        } while (true);
+
     }
 }
